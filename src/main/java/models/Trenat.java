@@ -4,15 +4,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Trenat {
-    private int tren_id;
-    private String emri_trenit;
-    private String tipi_trenit;
+    private int trenId;
+    private String emriTrenit;
+    private String tipiTrenit;
     private int kapaciteti;
 
-    private Trenat(int tren_id, String emri_trenit, String tipi_trenit, int kapaciteti) {
-        this.tren_id = tren_id;
-        this.emri_trenit = emri_trenit;
-        this.tipi_trenit = tipi_trenit;
+    private Trenat(int trenId, String emriTrenit, String tipiTrenit, int kapaciteti) {
+        this.trenId = trenId;
+        this.emriTrenit = emriTrenit;
+        this.tipiTrenit = tipiTrenit;
         this.kapaciteti = kapaciteti;
     }
     public static Trenat getInstance(ResultSet result) throws SQLException {
@@ -23,16 +23,16 @@ public class Trenat {
         return new Trenat(trenId, emriTrenit, tipiTrenit,kapaciteti);
     }
 
-    public int getTren_id() {
-        return tren_id;
+    public int getTrenId() {
+        return trenId;
     }
 
-    public String getEmri_trenit() {
-        return emri_trenit;
+    public String getEmriTrenit() {
+        return emriTrenit;
     }
 
-    public String getTipi_trenit() {
-        return tipi_trenit;
+    public String getTipiTrenit() {
+        return tipiTrenit;
     }
 
     public int getKapaciteti() {

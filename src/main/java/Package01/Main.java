@@ -98,11 +98,11 @@ public class Main {
 
         ResultSet results=statement.executeQuery(query1);
              while(results.next()){
-            int tren_id=results.getInt("tren_id");
-            String emri_trenit=results.getString("emri_trenit");
-            String tipi_trenit=results.getString("tipi_trenit");
+            int trenId=results.getInt("tren_id");
+            String emriTrenit=results.getString("emri_trenit");
+            String tipiTrenit=results.getString("tipi_trenit");
             int kapaciteti=results.getInt("kapaciteti");
-            System.out.println("Id: " +tren_id+" "+"\nEmri i trenit: "+emri_trenit+" "+"\nTipi i trenit: "+tipi_trenit+"\nKapaciteti: "+kapaciteti);
+            System.out.println("Id: " +trenId+" "+"\nEmri i trenit: "+emriTrenit+" "+"\nTipi i trenit: "+tipiTrenit+"\nKapaciteti: "+kapaciteti);
             System.out.println("----------------------------");
         }
     }
