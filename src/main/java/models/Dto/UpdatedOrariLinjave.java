@@ -1,6 +1,6 @@
 package models.Dto;
 
-public class UpdateOrariLinjave {
+public class UpdatedOrariLinjave {
     private int orariId;
 
     public UpdateOrariLinjaveDto(int orariId) {
@@ -15,4 +15,3 @@ public class UpdateOrariLinjave {
         this.orariId = orariId;
     }
 }
-
