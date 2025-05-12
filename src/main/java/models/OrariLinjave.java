@@ -3,7 +3,7 @@ package models;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class OrariLinjave {
+public class   OrariLinjave {
     private int orariId;
     private int trenId;
     private int nisjaId;
