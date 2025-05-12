@@ -9,8 +9,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class TrainRepository extends BaseRepository<Trenat, CreateTrenatDto, UpdateTrenatDto> {
-    public TrainRepository(){
+public class TrenatRepository extends BaseRepository<Trenat, CreateTrenatDto, UpdateTrenatDto> {
+    public TrenatRepository(){
         super("trenat");
     }
 
@@ -41,7 +41,7 @@ public class TrainRepository extends BaseRepository<Trenat, CreateTrenatDto, Upd
         }
         return null;
     }
-    
+
    public Trenat update(UpdateTrenatDto trenatDto) {
 
         return null;
