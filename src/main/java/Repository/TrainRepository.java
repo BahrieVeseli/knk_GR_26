@@ -41,7 +41,11 @@ public class TrainRepository extends BaseRepository<Trenat, CreateTrenatDto, Upd
         }
         return null;
     }
+    
+   public Trenat update(UpdateTrenatDto trenatDto) {
 
+        return null;
+    }
 
 
 }
