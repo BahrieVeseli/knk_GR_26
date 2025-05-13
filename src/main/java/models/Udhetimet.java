@@ -22,10 +22,10 @@ public class Udhetime {
     }
     public static Udhetime getInstance(ResultSet result) throws SQLException {
         int udhetimId=result.getInt("udhetim_id");
-        int orariId=result.getInt("orari_id")
+        int orariId=result.getInt("orari_id");
         LocalDate dataudhetimit= result.getDate("data_udhetimit").toLocalDate();
         int pasagjeret=result.getInt("pasagjere");
-        String statusi =result.getString("statusi")
+        String statusi =result.getString("statusi");
         return new Udhetime(udhetimId ,orariId, dataudhetimit, pasagjeret,statusi);
     }
 
