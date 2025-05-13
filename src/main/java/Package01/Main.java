@@ -81,13 +81,56 @@ public class Main {
                 (10, '2025-05-02', 190);
                 
                 """;
-       // statement.execute(query1);
+            String query6 = """
+    INSERT INTO Audit_Log (perdorues_id, veprimi) VALUES
+    (1, 'Shtoi trenin Adriatik Express'),
+    (2, 'Përditësoi orarin për trenin Kosova Rail'),
+    (3, 'Fshiu një destinacion të vjetër nga Peja'),
+    (4, 'Shikoi statistikat për datën 2025-05-01'),
+    (5, 'Shikoi listën e të gjithë trenave'),
+    (6, 'Shtoi një orar të ri për trenin Sharri Express'),
+    (7, 'Ndryshoi fjalëkalimin e tij personal'),
+    (8, 'Shikoi orarin e ditës së enjte'),
+    (9, 'Shtoi një përdorues të ri me rol operator'),
+    (10, 'Shikoi statistikat mujore për prill 2025');
+    """;
+            String query7 = """
+    INSERT INTO Udhetime (orari_id, data_udhetimit, pasagjere, statusi) VALUES
+    (1, '2025-05-10', 175, 'realizuar'),
+    (2, '2025-05-10', 160, 'realizuar'),
+    (3, '2025-05-11', 0, 'anuluar'),
+    (4, '2025-05-11', 200, 'realizuar'),
+    (5, '2025-05-12', 90, 'realizuar'),
+    (6, '2025-05-12', 0, 'anuluar'),
+    (7, '2025-05-13', 140, 'planifikuar'),
+    (8, '2025-05-13', 80, 'planifikuar'),
+    (9, '2025-05-14', 0, 'planifikuar'),
+    (10, '2025-05-14', 190, 'realizuar');
+    """;
+        String query8 = """
+INSERT INTO Rezervime (perdorues_id, orari_id, data_udhetimit, nr_biletave) VALUES
+(1, 1, '2025-05-15', 2),
+(2, 2, '2025-05-15', 1),
+(3, 3, '2025-05-16', 3),
+(4, 4, '2025-05-16', 2),
+(5, 5, '2025-05-17', 1),
+(6, 6, '2025-05-17', 4),
+(7, 7, '2025-05-18', 2),
+(8, 8, '2025-05-18', 1),
+(9, 9, '2025-05-19', 5),
+(10, 10, '2025-05-19', 3);
+""";
+
+
+        // statement.execute(query1);
         statement.executeUpdate(query1);
         statement.executeUpdate(query2);
         statement.executeUpdate(query3);
         statement.executeUpdate(query4);
         statement.executeUpdate(query5);
-
+        statement.executeUpdate(query6);
+        statement.executeUpdate(query7);
+        statement.executeUpdate(query8);
 
 
       //  statement.execute("SELECT * FROM Destinacionet WHERE emri_stacionit='Prishtinë'");

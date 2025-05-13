@@ -1,9 +1,9 @@
 package models.Dto;
 
-public class UpdatedOrariLinjave {
+public class UpdatedOrariLinjaveDto {
     private int orariId;
 
-    public UpdateOrariLinjaveDto(int orariId) {
+    public void UpdatedOrariLinjaveDto(int orariId) {
         this.orariId = orariId;
     }
 
