@@ -1,22 +1,22 @@
 package models.Dto;
 
 public class CreateTrenatDto {
-    private String emriTrenti;
+    private String emriTreni;
     private String tipiTrenit;
-    private int kapacitei;
+    private int kapaciteti;
 
-    public CreateTrenatDto(String emriTrenti, String tipiTrenit, int kapacitei) {
-        this.emriTrenti = emriTrenti;
+    public CreateTrenatDto(String emriTreni, String tipiTrenit, int kapaciteti) {
+        this.emriTreni = emriTreni;
         this.tipiTrenit = tipiTrenit;
-        this.kapacitei = kapacitei;
+        this.kapaciteti = kapaciteti;
     }
 
     public String getEmriTrenti() {
-        return emriTrenti;
+        return emriTreni;
     }
 
-    public void setEmriTrenti(String emriTrenti) {
-        this.emriTrenti = emriTrenti;
+    public void setEmriTrenti(String emriTreni) {
+        this.emriTreni = emriTreni;
     }
 
     public String getTipiTrenit() {
@@ -28,10 +28,10 @@ public class CreateTrenatDto {
     }
 
     public int getKapacitei() {
-        return kapacitei;
+        return kapaciteti;
     }
 
     public void setKapacitei(int kapacitei) {
-        this.kapacitei = kapacitei;
+        this.kapaciteti = kapacitei;
     }
 }
