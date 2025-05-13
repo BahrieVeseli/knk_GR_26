@@ -16,6 +16,9 @@ public class AuditLog {
         this.veprimi = veprimi;
         this.date = date;
     }
+    public static AuditLog of(int logId, int perdoruesId, String veprimi, Timestamp date) {
+        return new AuditLog(logId, perdoruesId, veprimi, date);
+    }
 
     public static AuditLog getInstance(ResultSet result) throws SQLException {
         int logId=result.getInt("log_id");
