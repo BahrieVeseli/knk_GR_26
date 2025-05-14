@@ -19,7 +19,7 @@ public class TrenatRepository extends BaseRepository<Trenat, CreateTrenatDto, Up
     }
     public Trenat create(CreateTrenatDto trenatDto){
         String query = """
-                INSERT INTO 
+                INSERT INTO
                 TRENAT (emri_trenit, tipi_trenit, kapaciteti)
                 VALUES (?, ?, ?)
                 """;
@@ -43,7 +43,23 @@ public class TrenatRepository extends BaseRepository<Trenat, CreateTrenatDto, Up
     }
 
    public Trenat update(UpdateTrenatDto trenatDto) {
+       Trenat existing = this.getById(trenatDto.getTreniId());
+       if (existing == null) {
+           return null;
+       }
 
+       String query = "UPDATE Trenat SET kapaciteti = ? WHERE id = ?";
+       try (PreparedStatement pstm = connection.prepareStatement(query)) {
+           pstm.setInt(1, trenatDto.getKapaciteti());
+           pstm.setInt(2, trenatDto.getTreniId());
+
+           int updated = pstm.executeUpdate();
+           if (updated == 1) {
+               return this.getById(trenatDto.getTreniId());
+           }
+       } catch (SQLException e) {
+           e.printStackTrace();
+       }
         return null;
     }
 
