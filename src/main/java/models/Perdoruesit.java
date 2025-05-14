@@ -15,6 +15,10 @@ public class Perdoruesit {
         this.fjalekalimi = fjalekalimi;
         this.roli = roli;
     }
+    public static Perdoruesit of(int perdoruesiID, String emriPerdoruesit, String fjalekalimi, String roli) {
+        return new Perdoruesit(perdoruesiID, emriPerdoruesit, fjalekalimi, roli);
+    }
+
     public static Perdoruesit getInstance(ResultSet result) throws SQLException {
         int perdoruesiId=result.getInt("perdorues_id");
         String emriPerdoruesit=result.getString("emri_perdoruesit");
