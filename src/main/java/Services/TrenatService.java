@@ -4,9 +4,9 @@ import Repository.TrenatRepository;
 import models.Dto.CreateTrenatDto;
 import models.Trenat;
 
-public class TrenatServices {
+public class TrenatService {
     private TrenatRepository trenatRepository;
-    public TrenatServices(){
+    public TrenatService(){
         this.trenatRepository = new TrenatRepository();
     }
     public Trenat getById(int id) throws Exception{
