@@ -12,6 +12,10 @@ public class Destinacionet {
         this.destinacionId = destinacionId;
         this.emriStacionit = emriStacionit;
     }
+
+    public static Destinacionet of(int destinacionId, String emriStacionit){
+        return new Destinacionet(destinacionId, emriStacionit);
+    }
     public static Destinacionet getInstance(ResultSet result) throws SQLException {
         int destinacionId=result.getInt("destinacion_id");
         String emriStacionit=result.getString("emri_stacionit");
