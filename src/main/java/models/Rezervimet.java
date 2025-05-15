@@ -12,6 +12,15 @@ public class Rezervimet {
     private int nrBiletave;
     private LocalDate dataRezervimit;
 
+    public Rezervimet(int rezervimiId, int perdoruesiId, int orariId, LocalDate dataUdhetimit, int nrBiletave, LocalDate dataRezervimit){
+        this.rezervimId = rezervimId;
+        this.perdoruesId = perdoruesId;
+        this.orariId = orariId;
+        this.dataUdhetimit = dataUdhetimit;
+        this.nrBiletave = nrBiletave;
+        this.dataRezervimit = dataRezervimit;
+    }
+    
     public static Rezervimet getInstance(ResultSet result) throws SQLException {
         int rezervimId = result.getInt("rezervim_id");
         int perdoruesId = result.getInt("perdorues_id");
