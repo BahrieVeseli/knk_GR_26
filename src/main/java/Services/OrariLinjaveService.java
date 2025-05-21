@@ -6,6 +6,7 @@ import models.Dto.UpdatedOrariLinjaveDto;
 import Repository.OrariLinjaveRepository;
 
 import java.util.List;
+
 public class OrariLinjaveService {
     private OrariLinjaveRepository orariRepository;
 
@@ -19,7 +20,7 @@ public class OrariLinjaveService {
         validateCreateDto(dto);
         OrariLinjave created = this.orariRepository.create(dto);
         if (created == null) {
-            throw new Exception("Krijimi i orarit deshtoi!");
+            throw new Exception("Create schedule failed");
         }
         return created;
     }
@@ -27,11 +28,11 @@ public class OrariLinjaveService {
     // Update vetem diten e nje orari qe ekziston
     public OrariLinjave updateDita(UpdatedOrariLinjaveDto dto) throws Exception {
         if (dto.getDita() == null || dto.getDita().trim().isEmpty()) {
-            throw new Exception("Dita nuk mund te jete bosh!");
+            throw new Exception("Day cannot be empty!");
         }
         OrariLinjave updated = this.orariRepository.update(dto);
         if (updated == null) {
-            throw new Exception("Perditesimi i dites deshtoi!");
+            throw new Exception("Update day failed!");
         }
         return updated;
     }
@@ -40,7 +41,7 @@ public class OrariLinjaveService {
     public OrariLinjave getOrarById(int id) throws Exception {
         OrariLinjave result = this.orariRepository.getById(id);
         if (result == null) {
-            throw new Exception("Orari me ID-ne e dhene nuk ekziston!");
+            throw new Exception("Schedule with provided ID does not exist!");
         }
         return result;
     }
@@ -54,7 +55,7 @@ public class OrariLinjaveService {
     public boolean deleteOrar(int id) throws Exception {
         boolean deleted = this.orariRepository.delete(id);
         if (!deleted) {
-            throw new Exception("Fshirja e orarit deshtoi!");
+            throw new Exception("Schedule deletetion failed!");
         }
         return true;
     }
@@ -62,10 +63,14 @@ public class OrariLinjaveService {
     // metode per validim
     private void validateCreateDto(CreateOrariLinjaveDto dto) throws Exception {
         if (dto.getTrenId() <= 0 || dto.getNisjaId() <= 0 || dto.getMbrritjaId() <= 0) {
-            throw new Exception("Te dhenat e trenit ose stacioneve jane te pavlefshme!");
+            throw new Exception("Data is invalid");
         }
         if (dto.getKohaNisjes() == null || dto.getKohaMbrritjes() == null || dto.getDita() == null) {
-            throw new Exception("Koha e nisjes, mberritjes dhe dita nuk mund te jene bosh!");
+            throw new Exception("Departing day, arrival day cannot be empty!");
         }
+    }
+
+    public OrariLinjave updateOrari(UpdatedOrariLinjaveDto dto) {
+        return orariRepository.update(dto);
     }
 }
