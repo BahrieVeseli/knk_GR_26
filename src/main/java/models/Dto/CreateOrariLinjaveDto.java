@@ -1,14 +1,17 @@
 package models.Dto;
 
+
+import java.sql.Time;
+
 public class CreateOrariLinjaveDto {
     private int trenId;
     private int nisjaId;
     private int mbrritjaId;
-    private String kohaNisjes;
-    private String kohaMbrritjes;
+    private Time kohaNisjes;
+    private Time kohaMbrritjes;
     private String dita;
 
-    public CreateOrariLinjaveDto(int trenId, int nisjaId, int mbrritjaId, String kohaNisjes, String kohaMbrritjes, String dita) {
+    public CreateOrariLinjaveDto(int trenId, int nisjaId, int mbrritjaId, Time kohaNisjes, Time kohaMbrritjes, String dita) {
         this.trenId = trenId;
         this.nisjaId = nisjaId;
         this.mbrritjaId = mbrritjaId;
@@ -41,19 +44,19 @@ public class CreateOrariLinjaveDto {
         this.mbrritjaId = mbrritjaId;
     }
 
-    public String getKohaNisjes() {
+    public Time getKohaNisjes() {
         return kohaNisjes;
     }
 
-    public void setKohaNisjes(String kohaNisjes) {
+    public void setKohaNisjes(Time kohaNisjes) {
         this.kohaNisjes = kohaNisjes;
     }
 
-    public String getKohaMbrritjes() {
+    public Time getKohaMbrritjes() {
         return kohaMbrritjes;
     }
 
-    public void setKohaMbrritjes(String kohaMbrritjes) {
+    public void setKohaMbrritjes(Time kohaMbrritjes) {
         this.kohaMbrritjes = kohaMbrritjes;
     }
 
