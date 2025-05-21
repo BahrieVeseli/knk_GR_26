@@ -8,8 +8,36 @@ import java.sql.*;
 import java.time.LocalDate;
 
 public class RezervimetRepository extends BaseRepository<Rezervimet, CreateRezervimetDto, UpdateRezervimetDto> {
+
     public RezervimetRepository() {
-        super("Rezervime");
+        super("rezervime");
+    }
+
+    @Override
+    public Rezervimet getById(int id) {
+        String query = "SELECT * FROM rezervime WHERE rezervim_id = ?";
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return fromResultSet(rs);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public boolean delete(int id) {
+        String query = "DELETE FROM rezervime WHERE rezervim_id = ?";
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setInt(1, id);
+            return ps.executeUpdate() == 1;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     @Override
@@ -20,9 +48,10 @@ public class RezervimetRepository extends BaseRepository<Rezervimet, CreateRezer
     @Override
     public Rezervimet create(CreateRezervimetDto dto) {
         String query = """
-            INSERT INTO Rezervime (perdorues_id, orari_id, data_udhetimit, nr_biletave, data_reservimit)
-            VALUES (?, ?, ?, ?, ?)
-        """;
+    INSERT INTO rezervime (perdorues_id, orari_id, data_udhetimit, nr_biletave, data_rezervimit)
+    VALUES (?, ?, ?, ?, ?)
+""";
+
 
         try {
             PreparedStatement pstm = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);

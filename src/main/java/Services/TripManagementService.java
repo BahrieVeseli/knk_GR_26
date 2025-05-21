@@ -4,9 +4,11 @@ import models.Dto.CreateRezervimetDto;
 import models.Dto.CreateUdhetimeDto;
 import models.Rezervimet;
 import models.Udhetime;
+import Repository.UdhetimetRepository;
 
 import java.time.LocalDate;
 import java.util.List;
+
 public class TripManagementService {
 
     private final RezervimetService rezervimetService;
@@ -55,4 +57,31 @@ public class TripManagementService {
     public boolean cancelReservation(int rezervimId) throws Exception {
         return rezervimetService.deleteRezervim(rezervimId);
     }
+
+    public int getTotalTrips() {
+        try {
+            return UdhetimetRepository.countAllTrips();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+    public int getRealizedTrips() {
+        try {
+            return UdhetimetRepository.countByStatus("realizuar");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
+    public int getCancelledTrips() {
+        try {
+            return UdhetimetRepository.countByStatus("anuluar");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
 }

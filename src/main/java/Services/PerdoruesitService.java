@@ -20,7 +20,7 @@ public class PerdoruesitService {
 
         Perdoruesit created = this.perdoruesitRepository.create(dto);
         if (created == null) {
-            throw new Exception("Krijimi i përdoruesit deshtoi!");
+            throw new Exception("Create user failed!");
         }
 
         return created;
@@ -29,12 +29,12 @@ public class PerdoruesitService {
 
     public Perdoruesit updateUser(UpdatePerdoruesitDto dto) throws Exception {
         if (dto.getEmri_perdoruesit() == null || dto.getEmri_perdoruesit().trim().isEmpty()) {
-            throw new Exception("Emri i perdoruesit nuk mund te jete bosh!");
+            throw new Exception("Username cannot be empty");
         }
 
         Perdoruesit updated = this.perdoruesitRepository.update(dto);
         if (updated == null) {
-            throw new Exception("Perditesimi i perdoruesit deshtoi!");
+            throw new Exception("Updating user failed!");
         }
 
         return updated;
@@ -44,7 +44,7 @@ public class PerdoruesitService {
     public Perdoruesit getUserById(int id) throws Exception {
         Perdoruesit user = this.perdoruesitRepository.getById(id);
         if (user == null) {
-            throw new Exception("Perdoruesi me ID-ne e dhene nuk ekziston!");
+            throw new Exception("User with provided ID does not exist!");
         }
         return user;
     }
@@ -63,7 +63,7 @@ public class PerdoruesitService {
     }
 
 
-    private void validateCreateDto(CreatePerdoruesitDto dto) throws Exception {
+    private static void validateCreateDto(CreatePerdoruesitDto dto) throws Exception {
         if (dto.getEmriPerdoruesit() == null || dto.getEmriPerdoruesit().trim().isEmpty()) {
             throw new Exception("Emri i perdoruesit eshte i detyrueshem.");
         }
@@ -74,4 +74,10 @@ public class PerdoruesitService {
             throw new Exception("Roli i perdoruesit eshte i detyrueshem.");
         }
     }
+
+    public boolean existsByUsername(String usernameInput) {
+        return perdoruesitRepository.findByUsername(usernameInput) != null;
+    }
+
 }
+
