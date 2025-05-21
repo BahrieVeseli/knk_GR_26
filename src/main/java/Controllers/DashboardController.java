@@ -413,160 +413,159 @@ public class DashboardController implements Initializable {
 
             System.out.println("Search triggered, filtered size: " + filter.size());
         });
-        @FXML
-        public void addOrariLinjaveReset() {
-            CScheduleID.clear();
-            CTrainID.clear();
-            CStartID.clear();
-            CArrivalID.clear();
-            CDepartureTime.setValue(null);
-            CArrivalTime.setValue(null);
-            CDay.setValue(null);
+    }
+    @FXML
+    public void addOrariLinjaveReset() {
+        CScheduleID.clear();
+        CTrainID.clear();
+        CStartID.clear();
+        CArrivalID.clear();
+        CDepartureTime.setValue(null);
+        CArrivalTime.setValue(null);
+        CDay.setValue(null);
+    }
+
+    @FXML
+    public void addOrariLinjaveUpdate() {
+        if (CScheduleID.getText().isEmpty()
+                || CTrainID.getText().isEmpty()
+                || CStartID.getText().isEmpty()
+                || CArrivalID.getText().isEmpty()
+                || CDepartureTime.getValue() == null
+                || CArrivalTime.getValue() == null
+                || CDay.getValue() == null) {
+
+            showErrorAlert("Please fill in all fields before updating.");
+            return;
         }
 
-        @FXML
-        public void addOrariLinjaveUpdate() {
-            if (CScheduleID.getText().isEmpty()
-                    || CTrainID.getText().isEmpty()
-                    || CStartID.getText().isEmpty()
-                    || CArrivalID.getText().isEmpty()
-                    || CDepartureTime.getValue() == null
-                    || CArrivalTime.getValue() == null
-                    || CDay.getValue() == null) {
+        try {
+            UpdatedOrariLinjaveDto dto = new UpdatedOrariLinjaveDto(
+                    Integer.parseInt(CScheduleID.getText()),
+                    CDay.getValue()
+            );
 
-                showErrorAlert("Please fill in all fields before updating.");
+            orariService.updateOrari(dto);
+            showSuccessAlert("Schedule updated successfully!");
+            addOrariLinjaveReset();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            showErrorAlert("Failed to update schedule: " + e.getMessage());
+        }
+    }
+
+
+
+
+    @FXML
+    public void addOrariLinjaveAdd() {
+        try {
+            if (CTrainID.getText().isEmpty() || CStartID.getText().isEmpty() || CArrivalID.getText().isEmpty()
+                    || CDepartureTime.getValue() == null || CArrivalTime.getValue() == null || CDay.getValue() == null) {
+                showErrorAlert("Please fill all the fields to add a schedule");
                 return;
             }
 
-            try {
-                UpdatedOrariLinjaveDto dto = new UpdatedOrariLinjaveDto(
-                        Integer.parseInt(CScheduleID.getText()),
-                        CDay.getValue()
-                );
 
-                orariService.updateOrari(dto);
-                showSuccessAlert("Schedule updated successfully!");
-                addOrariLinjaveReset();
-
-            } catch (Exception e) {
-                e.printStackTrace();
-                showErrorAlert("Failed to update schedule: " + e.getMessage());
-            }
-        }
+            java.sql.Time kohaNisjes = java.sql.Time.valueOf(CDepartureTime.getValue());
+            java.sql.Time kohaMbrritjes = java.sql.Time.valueOf(CArrivalTime.getValue());
 
 
+            CreateOrariLinjaveDto dto = new CreateOrariLinjaveDto(
+                    Integer.parseInt(CTrainID.getText()),
+                    Integer.parseInt(CStartID.getText()),
+                    Integer.parseInt(CArrivalID.getText()),
+                    kohaNisjes,
+                    kohaMbrritjes,
+                    CDay.getValue()
+            );
 
+            orariService.createOrar(dto);
+            showSuccessAlert("Schedule added successfully");
+            addOrariLinjaveReset();
+            showAllOraret();
 
-        @FXML
-        public void addOrariLinjaveAdd() {
-            try {
-                if (CTrainID.getText().isEmpty() || CStartID.getText().isEmpty() || CArrivalID.getText().isEmpty()
-                        || CDepartureTime.getValue() == null || CArrivalTime.getValue() == null || CDay.getValue() == null) {
-                    showErrorAlert("Please fill all the fields to add a schedule");
-                    return;
-                }
-
-
-                java.sql.Time kohaNisjes = java.sql.Time.valueOf(CDepartureTime.getValue());
-                java.sql.Time kohaMbrritjes = java.sql.Time.valueOf(CArrivalTime.getValue());
-
-
-                CreateOrariLinjaveDto dto = new CreateOrariLinjaveDto(
-                        Integer.parseInt(CTrainID.getText()),
-                        Integer.parseInt(CStartID.getText()),
-                        Integer.parseInt(CArrivalID.getText()),
-                        kohaNisjes,
-                        kohaMbrritjes,
-                        CDay.getValue()
-                );
-
-                orariService.createOrar(dto);
-                showSuccessAlert("Schedule added successfully");
-                addOrariLinjaveReset();
-                showAllOraret();
-
-            } catch (IllegalArgumentException e) {
-                showErrorAlert("Time format is incorrect. Use the correct format HH:mm:ss.");
-            } catch (Exception e) {
-                showErrorAlert("Error: " + e.getMessage());
-            }
-        }
-
-
-        private void showAllOraret() {
-            List<OrariLinjave> lista = orariService.getAllOraret();
-            ObservableList<OrariLinjave> observable = FXCollections.observableArrayList(lista);
-            Ctable.setItems(observable);
-        }
-
-
-        @FXML
-        public void addOrariLinjaveDelete() {
-            try {
-                if (CScheduleID.getText().isEmpty()) {
-                    showErrorAlert("Please enter Schedule ID in order to delete");
-                    return;
-                }
-
-                int id = Integer.parseInt(CScheduleID.getText());
-
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("Confirmation");
-                alert.setHeaderText(null);
-                alert.setContentText("Are you sure you want to delete the schedule " + id + "?");
-
-                Optional<ButtonType> option = alert.showAndWait();
-                if (option.isPresent() && option.get() == ButtonType.OK) {
-                    boolean deleted = orariService.deleteOrar(id);
-                    if (deleted) {
-                        showSuccessAlert("Schedule deleted successfully.");
-                        addOrariLinjaveReset();
-                        showAllOraret();
-                    }
-                }
-
-            } catch (Exception e) {
-                showErrorAlert("Error:" + e.getMessage());
-            }
-        }
-
-
-        @FXML
-        public void addOrariLinjaveSelect() {
-            OrariLinjave selected = Ctable.getSelectionModel().getSelectedItem();
-            if (selected != null) {
-                CScheduleID.setText(String.valueOf(selected.getOrariId()));
-                CTrainID.setText(String.valueOf(selected.getTrenId()));
-                CStartID.setText(String.valueOf(selected.getNisjaId()));
-                CArrivalID.setText(String.valueOf(selected.getMbrritjaId()));
-                CDepartureTime.setValue(selected.getKohaNisjes().toString());
-                CArrivalTime.setValue(selected.getKohaMbrritjes().toString());
-                CDay.setValue(selected.getDita());
-            }
-        }
-
-        private void clearFields() {
-            BReservationID.clear();
-            BUserID.clear();
-            BScheduleID.clear();
-            BNumberOfTickets.clear();
-            BTravelDate.setValue(null);
-            BReservationDate.setValue(null);
-        }
-
-        private void showErrorAlert(String message) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText(null);
-            alert.setContentText(message);
-            alert.showAndWait();
-        }
-
-        private void showSuccessAlert(String message) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setHeaderText(null);
-            alert.setContentText(message);
-            alert.showAndWait();
+        } catch (IllegalArgumentException e) {
+            showErrorAlert("Time format is incorrect. Use the correct format HH:mm:ss.");
+        } catch (Exception e) {
+            showErrorAlert("Error: " + e.getMessage());
         }
     }
 
+
+    private void showAllOraret() {
+        List<OrariLinjave> lista = orariService.getAllOraret();
+        ObservableList<OrariLinjave> observable = FXCollections.observableArrayList(lista);
+        Ctable.setItems(observable);
     }
+
+
+    @FXML
+    public void addOrariLinjaveDelete() {
+        try {
+            if (CScheduleID.getText().isEmpty()) {
+                showErrorAlert("Please enter Schedule ID in order to delete");
+                return;
+            }
+
+            int id = Integer.parseInt(CScheduleID.getText());
+
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirmation");
+            alert.setHeaderText(null);
+            alert.setContentText("Are you sure you want to delete the schedule " + id + "?");
+
+            Optional<ButtonType> option = alert.showAndWait();
+            if (option.isPresent() && option.get() == ButtonType.OK) {
+                boolean deleted = orariService.deleteOrar(id);
+                if (deleted) {
+                    showSuccessAlert("Schedule deleted successfully.");
+                    addOrariLinjaveReset();
+                    showAllOraret();
+                }
+            }
+
+        } catch (Exception e) {
+            showErrorAlert("Error:" + e.getMessage());
+        }
+    }
+
+
+    @FXML
+    public void addOrariLinjaveSelect() {
+        OrariLinjave selected = Ctable.getSelectionModel().getSelectedItem();
+        if (selected != null) {
+            CScheduleID.setText(String.valueOf(selected.getOrariId()));
+            CTrainID.setText(String.valueOf(selected.getTrenId()));
+            CStartID.setText(String.valueOf(selected.getNisjaId()));
+            CArrivalID.setText(String.valueOf(selected.getMbrritjaId()));
+            CDepartureTime.setValue(selected.getKohaNisjes().toString());
+            CArrivalTime.setValue(selected.getKohaMbrritjes().toString());
+            CDay.setValue(selected.getDita());
+        }
+    }
+
+    private void clearFields() {
+        BReservationID.clear();
+        BUserID.clear();
+        BScheduleID.clear();
+        BNumberOfTickets.clear();
+        BTravelDate.setValue(null);
+        BReservationDate.setValue(null);
+    }
+
+    private void showErrorAlert(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    private void showSuccessAlert(String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+}
